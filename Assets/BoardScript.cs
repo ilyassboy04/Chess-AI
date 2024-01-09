@@ -3,11 +3,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class BoardScript : MonoBehaviour
 {
     public Color lightCol;
     public Color darkCol;
+
+    static void DrawSquare(squareCo){
+
+
+    }
     void CreateGraphicalBoard () { 
         for (int file = 0; file <8; file ++)
         {
@@ -15,7 +21,7 @@ public class BoardScript : MonoBehaviour
             {
                 bool isLightSquare = (file + rank) % 2 != 0;
 
-                var  squareColour = (isLightSquare) ? lightCol : darkCol;
+                var squareColour = (isLightSquare) ? lightCol : darkCol;
                 var position = new Vector2(-3.5f + file, -3.5f + rank);
 
                 DrawSquare(squareColour, position);
@@ -23,10 +29,7 @@ public class BoardScript : MonoBehaviour
         }
     }
 
-    private void DrawSquare(Color squareColour, Vector2 position)
-    {
-        throw new NotImplementedException();
-    }
+
 
     // Start is called before the first frame update
     void Start()
