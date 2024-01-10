@@ -7,39 +7,38 @@ using UnityEngine.Rendering;
 
 public class BoardScript : MonoBehaviour
 {
-    public Color lightCol;
-    public Color darkCol;
+    public int boardSize = 8;
+    public float squareSize = 1.0f;
+    public Color lightColor = Color.white;
+    public Color darkColor= Color.black;
 
-    static void DrawSquare(squareCo){
-
-
+    void Start()
+    {
+        GenerateChessboard();
     }
-    void CreateGraphicalBoard () { 
-        for (int file = 0; file <8; file ++)
+
+    void GenerateChessboard()
+    {
+        for (int row = 0; row < boardSize; row++)
         {
-            for (int rank = 0; rank < 8; rank++)
+            for (int col = 0; col < boardSize; col++)
             {
-                bool isLightSquare = (file + rank) % 2 != 0;
+                bool isLightSquare = (row + col) % 2 == 0;
+                Color squareColor = isLightSquare ? lightColor : darkColor;
+                Vector3 squarePosition = new Vector3(col * squareSize, -row * squareSize, 0f);
 
-                var squareColour = (isLightSquare) ? lightCol : darkCol;
-                var position = new Vector2(-3.5f + file, -3.5f + rank);
-
-                DrawSquare(squareColour, position);
+                CreateSquare(squarePosition, squareColor);
             }
         }
     }
 
-
-
-    // Start is called before the first frame update
-    void Start()
+    void CreateSquare(Vector3 position, Color color)
     {
-        CreateGraphicalBoard();
-    }
+        GameObject square = GameObject.CreatePrimitive(PrimitiveType.Quad);
+        square.transform.position = position;
+        square.transform.localScale = new Vector3(squareSize, squareSize, 1f);
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Renderer renderer = square.GetComponent<Renderer>();
+        renderer.material.color = color;
     }
 }
